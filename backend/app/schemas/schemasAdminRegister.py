@@ -1,18 +1,16 @@
-from pydantic import BaseModel,Field,field_validator
+from pydantic import BaseModel,Field,field_validator,EmailStr
 
 
 class CreateRegistration(BaseModel):
     name:str=Field(min_length=3, max_length=15)
-    email:str
-    password:str
+    email:EmailStr
+    new_password:str
+    confirm_password:str
+    admin_id:str
 
-    @field_validator("email")
-    def email(cls,value):
-        if not value.endswith("@gmail.com"):
-            raise ValueError("email must ends with @gmail.com")
-        
-    @field_validator("password")
-    def password(cls,value):
+    
+    @field_validator("new_password")
+    def new_password(cls,value):
         
         if len(value)<8:
             raise ValueError("password must be more than 8 characters")
@@ -24,13 +22,10 @@ class CreateRegistration(BaseModel):
         return value
     
 
-class RegisterResponse(BaseModel):
-    id:int
-    name:str
-    email:str
+class LoginAdmin(BaseModel):
+    email:EmailStr
+    password:str
 
-    class Config:
-        orm_mode=True
            
 
 
