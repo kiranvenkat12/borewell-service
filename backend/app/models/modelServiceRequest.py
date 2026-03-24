@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column,Integer,String,ForeignKey
+from sqlalchemy import Column, DateTime,Integer,String,ForeignKey
 from app.db.database import Base
 from sqlalchemy.orm import relationship
 
@@ -19,9 +19,17 @@ class MOdelServiceRequest(Base):
     description=Column(String)
 
     #admin fields
-    status = Column(String)
+    status = Column(String, default="Pending")
     created_at = Column(String)
     updated_at = Column(String)
-
     admin_id=Column(Integer, ForeignKey("admin_registers.id"))
     admin=relationship("AdminRegister", back_populates="service_request")
+
+    #worker assignment
+    assigned_worker_id=Column(Integer, ForeignKey("model_worker_registers.id"))
+    worker=relationship("ModelWorkerRegister", back_populates="assigned_requests")
+ 
+
+    assigned_at = Column(DateTime, nullable=True)
+    started_at = Column(DateTime, nullable=True)
+    completed_at = Column(DateTime, nullable=True)

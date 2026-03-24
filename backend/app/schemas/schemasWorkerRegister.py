@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field,field_validator
+from typing import List,Optional
+from app.schemas.schemasServiceRequest import ResponseSchemasServiceRequest
 
 
 class CreateWorkerRegister(BaseModel):
@@ -22,8 +24,14 @@ class CreateWorkerRegister(BaseModel):
     
 
 class WorkerResponse(BaseModel):
+    id:int
     name:str
     email:str
+    assigned_requests: Optional[List[ResponseSchemasServiceRequest]] = []
+
+
+    class Config:
+        orm_mode = True
 
 
     

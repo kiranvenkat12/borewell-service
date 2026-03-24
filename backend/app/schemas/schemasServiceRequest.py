@@ -1,4 +1,6 @@
 from pydantic import BaseModel,Field,field_validator,EmailStr
+from typing import Optional
+from datetime import datetime
 
 class CreateSchemasServiceRequest(BaseModel):
     name: str = Field(..., max_length=100)
@@ -25,3 +27,10 @@ class ResponseSchemasServiceRequest(BaseModel):
     pincode: str
     description: str
     status: str
+    assigned_worker_id: Optional[int] = None
+    assigned_at: Optional[datetime] = None
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+
+    class Config:
+        orm_mode=True

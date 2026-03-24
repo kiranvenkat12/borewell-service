@@ -9,3 +9,5 @@ class ModelWorkerRegister(Base):
     email = Column(String)
     password = Column(String)
 
+     
+    assigned_requests= relationship("MOdelServiceRequest", back_populates="worker")
