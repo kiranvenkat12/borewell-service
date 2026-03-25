@@ -2,10 +2,13 @@
 from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.services.crudserviceRequest import create_service_request,get_service_request,get_all_service_requests,get_request_for_worker,assign_worker,start_work_request,complete_service_request
+from app.services.crudserviceRequest import create_service_request,get_service_request,get_all_service_requests,get_requests_for_worker,assign_worker,start_work_request,complete_service_request
 from app.schemas.schemasServiceRequest import CreateSchemasServiceRequest, ResponseSchemasServiceRequest
 from app.db.database import get_db
 from app.core.dependency import get_current_user,admin_only
+from app.schemas.schemasServiceRequest import AssignWorkerRequest
+
+
 service_requests_router = APIRouter(prefix="/service-requests", tags=["Service Requests"])
 
 
@@ -15,7 +18,7 @@ def create_service_request_endpoint(service_request: CreateSchemasServiceRequest
 
 
 @service_requests_router.get("/{service_request_id}")
-def get_service_request_endpoint(service_request_id: int, db: Session = Depends(get_db)):
+def get_service_request_endpoint_by_ID(service_request_id: int, db: Session = Depends(get_db)):
     return get_service_request(db, service_request_id)
 
 
@@ -23,22 +26,20 @@ def get_service_request_endpoint(service_request_id: int, db: Session = Depends(
 def get_all_service_requests_endpoint(db: Session = Depends(get_db), admin: dict=Depends(admin_only)):
     return get_all_service_requests(db)
 
-#showing the all requests to worker 
-
-@service_requests_router.get("/{worker_id}",response_model=List[ResponseSchemasServiceRequest])
-def assign_work_endpoint(worker_id:int, db:Session=Depends(get_db)):
-    request=get_request_for_worker(db, worker_id)
-    if not request:
+@service_requests_router.get("/worker/{worker_id}/requests", response_model=List[ResponseSchemasServiceRequest])
+def get_requests_for_worker_endpoint(worker_id: int, db: Session = Depends(get_db)):
+    requests = get_requests_for_worker(db, worker_id)
+    if not requests:
         raise HTTPException(status_code=404, detail="No requests found for this worker")
-    return request
+    # Convert each ORM object to Pydantic model
+    return [ResponseSchemasServiceRequest.from_orm(r) for r in requests]
 
 
 #admin will assign the request to worker and change the status to assigned
-
-@service_requests_router.put("/{service_request_id}/{worker_id}", response_model=list[ResponseSchemasServiceRequest])
-def assign_work(service_request_id : int,worker_id:int,db:Session=Depends(get_db) ):
-    request=assign_worker(db,service_request_id,worker_id)
-    return request
+@service_requests_router.put("/", response_model=ResponseSchemasServiceRequest)
+def assign_work(assign_worker_request: AssignWorkerRequest, db: Session = Depends(get_db)):
+    request = assign_worker(db, assign_worker_request.request_id, assign_worker_request.worker_id)
+    return request 
 
 #worker will start the process
 @service_requests_router.put("/{service_request_id}/start",  response_model=list[ResponseSchemasServiceRequest])

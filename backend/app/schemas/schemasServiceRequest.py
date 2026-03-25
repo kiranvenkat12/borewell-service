@@ -33,4 +33,10 @@ class ResponseSchemasServiceRequest(BaseModel):
     completed_at: Optional[datetime] = None
 
     class Config:
-        orm_mode=True
+        from_attributes = True
+
+
+
+class AssignWorkerRequest(BaseModel):
+    worker_id: int
+    request_id: int        
