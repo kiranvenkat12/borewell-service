@@ -34,8 +34,9 @@ class WorkerResponse(BaseModel):
         orm_mode = True
 
 
-    
-     
-        
+class WorkerLogin(BaseModel):
+    email: EmailStr = Field(..., example="john@example.com")
+    password: str = Field(..., example="password123")
+
     
          

@@ -49,6 +49,18 @@ def get_admin(db:Session):
     return db.query(AdminRegister).all()
 
 
+#delete the admin
+def delete_admin(db:Session, admin_id:int):
+
+    admin=db.query(AdminRegister).filter(AdminRegister.id == admin_id).first()
+    if not admin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    
+    db.delete(admin)
+    db.commit()
+    return {"message": "Admin deleted successfully"}
+
+
 
 
 
