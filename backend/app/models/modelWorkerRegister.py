@@ -6,7 +6,7 @@ class ModelWorkerRegister(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    email = Column(String)
+    phoneNumber = Column(String)
     password = Column(String)
 
      

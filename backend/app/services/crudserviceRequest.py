@@ -7,14 +7,16 @@ from app.models.modelWorkerRegister import ModelWorkerRegister
 
 def create_service_request(db:Session, service_request:CreateSchemasServiceRequest):
     db_service_request=MOdelServiceRequest(
+ 
         name=service_request.name,
         phone_primary=service_request.phone_primary,
         phone_secondary=service_request.phone_secondary,
-        email=service_request.email,
+        
         service_type=service_request.service_type,
-        borewell_depth=service_request.borewell_depth,
+        borewell_depth=service_request.borewell_depth if service_request.borewell_depth else None,
+
         address=service_request.address,
-        area=service_request.area,
+        
         pincode=service_request.pincode,
         description=service_request.description,
         status="Pending",

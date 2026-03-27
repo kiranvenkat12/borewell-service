@@ -11,8 +11,8 @@ from app.core.security import verify_password
 
 def create_worker_register(db:Session, worker_register:CreateWorkerRegister):
 
-    if db.query(ModelWorkerRegister).filter(ModelWorkerRegister.email == worker_register.email).first():
-        raise ValueError("Email already exists")
+    if db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phoneNumber  == worker_register.phoneNumber).first():
+        raise ValueError("Phone number already exists")
 
     if worker_register.password != worker_register.confirm_password:
         raise ValueError("Password and confirm password do not match")
@@ -21,7 +21,7 @@ def create_worker_register(db:Session, worker_register:CreateWorkerRegister):
 
     db_worker_register=ModelWorkerRegister(
         name=worker_register.name,
-        email=worker_register.email,
+        phoneNumber=worker_register.phoneNumber,
         password=hashed_password
     )
     db.add(db_worker_register)
@@ -36,9 +36,9 @@ def get_all_workers(db: Session):
     return workers
 
 
-def get_worker_by_email(db: Session, email: str):
-    user = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.email == email).first()
-    print(f"Queried email: {email}, Found: {user}")
+def get_worker_by_email(db: Session, phoneNumber: str):
+    user = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phoneNumber == phoneNumber).first()
+    print(f"Queried phone number: {phoneNumber}, Found: {user}")
     return user
 
 

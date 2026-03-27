@@ -5,25 +5,31 @@ from datetime import datetime
 class CreateSchemasServiceRequest(BaseModel):
     name: str = Field(..., max_length=100)
     phone_primary: str = Field(..., max_length=20)
-    phone_secondary: str = Field(None, max_length=20)
-    email: EmailStr = Field(None)
+    phone_secondary: Optional[str] = Field(None, max_length=20)
+    
     service_type: str = Field(..., max_length=100)
-    borewell_depth: int = Field(..., ge=0)
+    borewell_depth: Optional[int] = Field(None, ge=0)
     address: str = Field(..., max_length=200)
-    area: str = Field(..., max_length=100)
+    
     pincode: str = Field(..., max_length=10)
-    description: str = Field(None, max_length=200)
+    description: Optional[str] = Field(None, max_length=200)
+    @field_validator("borewell_depth", mode="before")
+    @classmethod
+    def validate_depth(cls, v):
+        if v == "" or v is None:
+            return None
+        return int(v)
     
 class ResponseSchemasServiceRequest(BaseModel):
     id: int
     name: str
     phone_primary: str
     phone_secondary: str
-    email: EmailStr
+    
     service_type: str
-    borewell_depth: int
+    borewell_depth: Optional[int]
     address: str
-    area: str
+   
     pincode: str
     description: str
     status: str

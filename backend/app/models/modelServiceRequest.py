@@ -10,11 +10,9 @@ class MOdelServiceRequest(Base):
     name = Column(String)
     phone_primary=Column(String)
     phone_secondary=Column(String)
-    email=Column(String)
     service_type=Column(String)
     borewell_depth=Column(Integer)
     address=Column(String)
-    area=Column(String)
     pincode=Column(String)
     description=Column(String)
 

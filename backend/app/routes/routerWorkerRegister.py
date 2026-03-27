@@ -17,9 +17,9 @@ def get_all_workers_endpoint(db:Session=Depends(get_db), admin: dict = Depends(a
     return get_all_workers(db)
 
 
-@worker_register_router.get("/worker-registers/{email}", response_model=WorkerResponse)
-def get_worker_by_email_endpoint(email: str, db: Session = Depends(get_db), admin: dict = Depends(admin_only)):
-    worker = get_worker_by_email(db, email)
+@worker_register_router.get("/worker-registers/{phoneNumber}", response_model=WorkerResponse)
+def get_worker_by_email_endpoint(phoneNumber: str, db: Session = Depends(get_db), admin: dict = Depends(admin_only)):
+    worker = get_worker_by_email(db, phoneNumber)
     if not worker:
         raise HTTPException(status_code=404, detail="Worker not found")
     return worker
