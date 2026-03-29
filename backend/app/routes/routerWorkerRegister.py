@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.schemasWorkerRegister import CreateWorkerRegister, WorkerResponse, WorkerLogin
-from app.services.crudWorkerRegister import create_worker_register, get_all_workers, get_worker_by_email, get_worker_by_id,delete_worker_by_id, worker_Login
+from app.services.crudWorkerRegister import create_worker_register, get_all_workers, get_worker_by_phonenumber, get_worker_by_id,delete_worker_by_id, worker_Login
 from app.db.database import get_db
 from app.core.dependency import get_current_user,admin_only,worker_only
 
@@ -17,9 +17,9 @@ def get_all_workers_endpoint(db:Session=Depends(get_db), admin: dict = Depends(a
     return get_all_workers(db)
 
 
-@worker_register_router.get("/worker-registers/{phoneNumber}", response_model=WorkerResponse)
-def get_worker_by_email_endpoint(phoneNumber: str, db: Session = Depends(get_db), admin: dict = Depends(admin_only)):
-    worker = get_worker_by_email(db, phoneNumber)
+@worker_register_router.get("/worker-registers/{phonenumber}", response_model=WorkerResponse)
+def get_worker_by_phonenumber_endpoint(phonenumber: str, db: Session = Depends(get_db), admin: dict = Depends(admin_only)):
+    worker = get_worker_by_phonenumber(db, phonenumber)
     if not worker:
         raise HTTPException(status_code=404, detail="Worker not found")
     return worker
@@ -37,6 +37,6 @@ def delete_worker_by_id_endpoint(id:int, db:Session=Depends(get_db), admin: dict
 
 @worker_register_router.post("/login")
 def worker_login_endpoint(credentials:WorkerLogin, db: Session = Depends(get_db)):
-    return worker_Login(db, credentials.email, credentials.password)
+    return worker_Login(db, credentials.phonenumber, credentials.password)
 
 

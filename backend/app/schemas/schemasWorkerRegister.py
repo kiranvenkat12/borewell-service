@@ -5,7 +5,7 @@ from app.schemas.schemasServiceRequest import ResponseSchemasServiceRequest
 
 class CreateWorkerRegister(BaseModel):
     name: str = Field(..., example="John Doe")
-    phoneNumber: str = Field(..., example="1234567890")
+    phonenumber: str = Field(..., example="1234567890")
     password: str = Field(..., example="password123")
     confirm_password: str = Field(..., example="password123")   
     @field_validator('password')
@@ -26,7 +26,7 @@ class CreateWorkerRegister(BaseModel):
 class WorkerResponse(BaseModel):
     id:int
     name:str
-    phoneNumber:str
+    phonenumber:str
     assigned_requests: Optional[List[ResponseSchemasServiceRequest]] = []
 
 
@@ -35,7 +35,7 @@ class WorkerResponse(BaseModel):
 
 
 class WorkerLogin(BaseModel):
-    phoneNumber: str = Field(..., example="1234567890")
+    phonenumber: str = Field(..., example="1234567890")
     password: str = Field(..., example="password123")
 
     

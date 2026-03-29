@@ -11,7 +11,7 @@ from app.core.security import verify_password
 
 def create_worker_register(db:Session, worker_register:CreateWorkerRegister):
 
-    if db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phoneNumber  == worker_register.phoneNumber).first():
+    if db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phonenumber  == worker_register.phonenumber).first():
         raise ValueError("Phone number already exists")
 
     if worker_register.password != worker_register.confirm_password:
@@ -21,7 +21,7 @@ def create_worker_register(db:Session, worker_register:CreateWorkerRegister):
 
     db_worker_register=ModelWorkerRegister(
         name=worker_register.name,
-        phoneNumber=worker_register.phoneNumber,
+        phonenumber=worker_register.phonenumber,
         password=hashed_password
     )
     db.add(db_worker_register)
@@ -36,9 +36,9 @@ def get_all_workers(db: Session):
     return workers
 
 
-def get_worker_by_email(db: Session, phoneNumber: str):
-    user = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phoneNumber == phoneNumber).first()
-    print(f"Queried phone number: {phoneNumber}, Found: {user}")
+def get_worker_by_phonenumber(db: Session, phonenumber: str):
+    user = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phonenumber == phonenumber).first()
+    print(f"Queried phone number: {phonenumber}, Found: {user}")
     return user
 
 
@@ -61,16 +61,17 @@ def delete_worker_by_id(db:Session, worker_id:int):
     return {"message": "Worker deleted successfully"}
 
 
-def worker_Login(db:Session, email:str, password:str):
-    worker = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.email == email).first()
+def worker_Login(db:Session, phonenumber:str, password:str):
+    worker = db.query(ModelWorkerRegister).filter(ModelWorkerRegister.phonenumber == phonenumber).first()
     if not worker:
         raise HTTPException(status_code=404, detail="Worker not found")
     
     if not verify_password(password, worker.password):
         raise HTTPException(status_code=401, detail="Incorrect password")
+    name1 = worker.name
     
     token=create_access_token(user_id=worker.id, role="worker")
 
-    return {"message": "Login successful", "access_token": token, "token_type": "bearer"}
+    return {"message": "Login successful", "access_token": token, "token_type": "bearer", "name": name1}
     
     return worker

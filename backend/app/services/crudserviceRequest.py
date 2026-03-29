@@ -119,3 +119,12 @@ def delete_service_request(db: Session, service_request_id: int):
     db.delete(service_request)
     db.commit()
     return {"detail": "Service request deleted successfully"}
+
+
+def get_all_assigned_service_requests(db: Session):
+    return db.query(MOdelServiceRequest).filter(MOdelServiceRequest.status == "Assigned").all()
+
+
+def get_all_completed_service_requests(db: Session):
+    return db.query(MOdelServiceRequest).filter(MOdelServiceRequest.status == "Completed").all()
+    
