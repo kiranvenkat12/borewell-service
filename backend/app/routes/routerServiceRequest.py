@@ -24,13 +24,15 @@ def get_all_service_requests_endpoint(db: Session = Depends(get_db), admin: dict
     return get_all_service_requests(db)
 
 @service_requests_router.get("/worker/{worker_id}/requests", response_model=List[ResponseSchemasServiceRequest])
-def get_requests_for_worker_endpoint(worker_id: int, db: Session = Depends(get_db), worker: dict = Depends(worker_only)):
+def get_requests_for_worker_endpoint(
+    worker_id: int,
+    db: Session = Depends(get_db),
+    worker: dict = Depends(worker_only)
+):
     requests = get_requests_for_worker(db, worker_id)
-    if not requests:
-        raise HTTPException(status_code=404, detail="No requests found for this worker")
-    # Convert each ORM object to Pydantic model
-    return [ResponseSchemasServiceRequest.from_orm(r) for r in requests]
 
+    
+    return [ResponseSchemasServiceRequest.from_orm(r) for r in requests]
 
 #admin will assign the request to worker and change the status to assigned
 @service_requests_router.put("/", response_model=ResponseSchemasServiceRequest)

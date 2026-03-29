@@ -69,9 +69,10 @@ def worker_Login(db:Session, phonenumber:str, password:str):
     if not verify_password(password, worker.password):
         raise HTTPException(status_code=401, detail="Incorrect password")
     name1 = worker.name
+    id1 = worker.id
     
     token=create_access_token(user_id=worker.id, role="worker")
 
-    return {"message": "Login successful", "access_token": token, "token_type": "bearer", "name": name1}
+    return {"message": "Login successful", "access_token": token, "token_type": "bearer", "name": name1, "id": id1}
     
     return worker
