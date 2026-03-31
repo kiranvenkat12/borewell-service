@@ -31,7 +31,7 @@ app.add_middleware(
 # ----------------------------
 # 2️⃣ Include routers
 # ----------------------------
-app.include_router(admin_router)
+app.include_router(admin_router, prefix="/admin")
 app.include_router(service_requests_router, prefix="/service-requests")
 app.include_router(worker_register_router, prefix="/worker-registers")
 
