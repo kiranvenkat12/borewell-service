@@ -33,7 +33,7 @@ app.add_middleware(
 # ----------------------------
 app.include_router(admin_router, prefix="/admin")
 app.include_router(service_requests_router, prefix="/service-requests")
-app.include_router(worker_register_router, prefix="/worker-registers")
+app.include_router(worker_register_router)
 
 # ----------------------------
 # 3️⃣ Optional root for health check
