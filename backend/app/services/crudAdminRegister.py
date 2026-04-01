@@ -10,7 +10,7 @@ import shutil
 
 
 def create_admin(db:Session, user:CreateRegistration):
-    admin_id=os.environ.get("borewell_service_admin_id")
+    admin_id=os.environ.get("borewell_service_admin_id").strip()
 
     if user.new_password != user.confirm_password:
         raise ValueError("passwords do not match")
