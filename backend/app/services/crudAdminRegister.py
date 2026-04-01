@@ -8,9 +8,18 @@ from app.core.auth import create_access_token
 from app.core.dependency import get_current_user
 import shutil
 
+def get_admin_id_from_file():
+    secret_path = "/etc/secrets/borewell_service_admin_id"
+    try:
+        with open(secret_path, "r") as f:
+            return f.read().strip()  # removes any extra newline or spaces
+    except FileNotFoundError:
+        raise ValueError("Server admin ID secret file not found")
+    
 
+    
 def create_admin(db:Session, user:CreateRegistration):
-    admin_id=os.environ.get("borewell_service_admin_id").strip()
+    admin_id=get_admin_id_from_file()
 
     if user.new_password != user.confirm_password:
         raise ValueError("passwords do not match")
