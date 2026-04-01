@@ -18,8 +18,7 @@ def create_admin(db:Session, user:CreateRegistration):
         raise ValueError("email already exists")
     
     if user.admin_id != admin_id:
-        raise ValueError("invalid admin id")
-    
+        raise HTTPException(status_code=400, detail="Invalid admin ID")    
     hashed_password=hash_password(user.new_password)
 
     db_user=AdminRegister(
