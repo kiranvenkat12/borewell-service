@@ -1,8 +1,9 @@
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
 from fastapi import HTTPException, status
+import os
 
-SECRET_KEY ="supersecretkey"
+SECRET_KEY =os.getenv("JWT_SECRET_KEY")
 ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
