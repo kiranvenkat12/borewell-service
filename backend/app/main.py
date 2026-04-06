@@ -16,8 +16,9 @@ app = FastAPI()
 # 1️⃣ CORS configuration
 # ----------------------------
 origins = [
-    "https://borewell-services.vercel.app",  # your frontend
-    "http://localhost:3000",                 # optional for local dev
+    "https://borewellservice.in",
+    "https://www.borewellservice.in",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
