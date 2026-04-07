@@ -5,6 +5,7 @@ from app.db.database import engine, Base
 from app.routes.routerAdminRegister import router as admin_router
 from app.routes.routerServiceRequest import service_requests_router
 from app.routes.routerWorkerRegister import worker_register_router
+from app.routes.routerCustomerRegistration import customer_register_rooter
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
@@ -35,6 +36,7 @@ app.add_middleware(
 app.include_router(admin_router)
 app.include_router(service_requests_router)
 app.include_router(worker_register_router)
+app.include_router(customer_register_rooter)
 
 # ----------------------------
 # 3️⃣ Optional root for health check

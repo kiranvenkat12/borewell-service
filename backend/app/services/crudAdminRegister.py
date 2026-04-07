@@ -7,7 +7,7 @@ from app.core.security import hash_password, verify_password
 from app.core.auth import create_access_token
 from app.core.dependency import get_current_user
 import shutil
-
+from app.models.modelCustomerRegistration import ModelCustomerRegistration,BoreWellInfo
 
 
 def get_admin_id_from_file():
@@ -69,6 +69,34 @@ def delete_admin(db:Session, admin_id:int):
     db.delete(admin)
     db.commit()
     return {"message": "Admin deleted successfully"}
+
+
+def  send_borewell_info(db:Session, customer_num:int, bore:BoreWellInfo):
+
+    customer = db.query(ModelCustomerRegistration).filter(ModelCustomerRegistration.phoneNumber == customer_num).first()
+
+    if not customer:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    borewell_info = BoreWellInfo(
+        customer_id=customer.id,
+        borewell_depth=bore.borewell_depth,
+        phoneNumber=customer_num,
+        casing_depth=bore.casing_depth, 
+        water_level=bore.water_level,
+        pipe_size=bore.pipe_size,
+        pipe_joint=bore.pipe_joint,
+        video_url=bore.video_url
+    )
+    db.add(borewell_info)
+    db.commit()
+    db.refresh(borewell_info)
+    return borewell_info
+
+def get_borewell_info(db:Session, customer_num:int):
+    borewell_info = db.query(BoreWellInfo).filter(BoreWellInfo.phoneNumber == customer_num).all()
+    if not borewell_info:
+        raise HTTPException(status_code=404, detail="Borewell information not found for the customer")
+    return borewell_info
 
 
 

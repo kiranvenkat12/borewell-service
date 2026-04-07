@@ -33,3 +33,15 @@ def worker_only(current_user: dict = Depends(get_current_user)):
     if current_user.get("role") != "worker":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Worker access required")
     return current_user
+
+
+def customer_only(current_user: dict = Depends(get_current_user)):
+    """
+    Checks that the user is a customer.
+    """
+    if current_user.get("role") != "customer":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Customer access required"
+        )
+    return current_user
