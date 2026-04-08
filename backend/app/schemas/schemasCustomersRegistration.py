@@ -78,6 +78,15 @@ class AnalysisSchema(BaseModel):
 
 
 class BorewellDataSchema(BaseModel):
+    borewell_depth: float
+    casing_depth: float
+    water_level: float
+    pipe_size: Optional[str] = None
+    pipe_joint: Optional[str] = None
+    water_gaps: Optional[str] = None
+    casing_Condition: Optional[str] = None
+    pipe_Condition: Optional[str] = None
+    Water_Quality: Optional[str] = None
     tds: float | None
     ph: float | None
     hardness: float | None
