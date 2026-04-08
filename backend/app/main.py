@@ -20,6 +20,7 @@ origins = [
     "https://borewellservice.in",
     "https://www.borewellservice.in",
     "http://localhost:3000",
+     "http://localhost:5173", 
 ]
 
 app.add_middleware(
