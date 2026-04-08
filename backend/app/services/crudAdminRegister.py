@@ -262,6 +262,15 @@ def get_borewell_info(db: Session, customer_num: str):
 
         final_response.append({
             "borewell_data": {
+                "borewell_depth": bore.borewell_depth,
+                "casing_depth": bore.casing_depth,
+                "water_level": bore.water_level,
+                "pipe_size": bore.pipe_size,
+                "pipe_joint": bore.pipe_joint,
+                "water_gaps": bore.water_gaps,
+                "casing_Condition": bore.casing_Condition,
+                "pipe_Condition": bore.pipe_Condition,
+                "Water_Quality": bore.Water_Quality,
                 "tds": bore.tds,
                 "ph": bore.ph,
                 "hardness": bore.hardness,

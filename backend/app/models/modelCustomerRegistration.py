@@ -7,7 +7,7 @@ class ModelCustomerRegistration(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
-    phoneNumber = Column(BigInteger, unique=True, nullable=False)
+    phoneNumber = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
 
     # Relationship to borewell info
