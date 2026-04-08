@@ -21,11 +21,11 @@ def login_customer(credentials: CustomerLogin, db: Session = Depends(get_db)):
     return customer_login(db, credentials.phoneNumber, credentials.password)
 
 @customer_register_rooter.get("/customers", response_model=list[CustomerResponse])  
-def get_all_customers_endpoint(db: Session = Depends(get_db), customer: dict = Depends(customer_only)):
+def get_all_customers_endpoint(db: Session = Depends(get_db), customer: dict = Depends(admin_only)):
     return get_all_customers(db)
 
 @customer_register_rooter.get("/customer-registrations/{phoneNumber}", response_model=CustomerResponse)
-def get_customer_by_phonenumber_endpoint(phoneNumber: str, db: Session = Depends(get_db) , customer: dict = Depends(customer_only)):
+def get_customer_by_phonenumber_endpoint(phoneNumber: str, db: Session = Depends(get_db) , customer: dict = Depends(admin_only)):
     customer = get_customer_by_phonenumber(db, phoneNumber)
     if not customer:
         raise HTTPException(status_code=404, detail="Customer not found")
