@@ -37,3 +37,21 @@ def get_customer_by_phonenumber_endpoint(phoneNumber: str, db: Session = Depends
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,7 +25,26 @@ class BoreWellInfo(Base):
     water_level = Column(Float, nullable=False)
     pipe_size = Column(String, nullable=True)
     pipe_joint = Column(String, nullable=True)
-    video_url = Column(String, nullable=True)
+    water_gaps = Column(String , nullable=True)
+    casing_Condition = Column(String, nullable=True)
+    pipe_Condition = Column(String, nullable=True)
+    Water_Quality = Column(String, nullable=True)
+
+    tds = Column(Float, nullable=True)
+    ph = Column(Float, nullable=True)
+    hardness = Column(Float, nullable=True)
+    iron = Column(Float, nullable=True)
+    chlorine = Column(Float, nullable=True)
+    nitrate = Column(Float, nullable=True)
+
+    # Visual checks
+    water_color = Column(String, nullable=True)
+    water_smell = Column(String, nullable=True)
+
+    # Final result
+    water_quality_status = Column(String, nullable=True)
+
+
 
     # Relationship back to customer
     customer = relationship("ModelCustomerRegistration", back_populates="borewells")
