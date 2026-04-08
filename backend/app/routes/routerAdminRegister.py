@@ -26,7 +26,7 @@ def delete_admin_endpoint(admin_id: int, db: Session = Depends(get_db), current_
     return delete_admin(db, admin_id)   
 
 @router.post("/borewell-info/{customer_num}")
-def send_borewell_info_endpoint(customer_num: int, borewell_data: BorewellInfo, db: Session = Depends(get_db), current_user: dict = Depends(admin_only)):
+def send_borewell_info_endpoint(customer_num: str, borewell_data: BorewellInfo, db: Session = Depends(get_db), current_user: dict = Depends(admin_only)):
     return send_borewell_info(db, customer_num, borewell_data)
     
 @router.get("/borewell-info/{customer_num}", response_model=List[BorewellResponseSchema])  # Added response_model for list of BorewellInfo

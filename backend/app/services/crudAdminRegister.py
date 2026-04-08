@@ -71,7 +71,7 @@ def delete_admin(db:Session, admin_id:int):
     return {"message": "Admin deleted successfully"}
 
 
-def send_borewell_info(db: Session, customer_num: int, bore: BoreWellInfo):
+def send_borewell_info(db: Session, customer_num: str, bore: BoreWellInfo):
 
     customer = db.query(ModelCustomerRegistration).filter(
         ModelCustomerRegistration.phoneNumber == customer_num
