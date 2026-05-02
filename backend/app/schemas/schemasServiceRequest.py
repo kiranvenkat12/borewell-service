@@ -45,4 +45,17 @@ class ResponseSchemasServiceRequest(BaseModel):
 
 class AssignWorkerRequest(BaseModel):
     worker_id: int
-    request_id: int        
+    request_id: int       
+
+
+class BorewellDetails(BaseModel):
+         bore_depth: float
+         water_level:float
+         casing_diameter: float
+         floors_supply: int
+         electricity_supply:int
+         usage_type:int
+         class Config:
+             from_attributes = True
+
+

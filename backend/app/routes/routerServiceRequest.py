@@ -2,8 +2,8 @@
 from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.services.crudserviceRequest import create_service_request,get_service_request,get_all_service_requests,get_requests_for_worker,assign_worker,start_work_request,complete_service_request,delete_service_request, get_all_assigned_service_requests,get_all_completed_service_requests
-from app.schemas.schemasServiceRequest import CreateSchemasServiceRequest, ResponseSchemasServiceRequest
+from app.services.crudserviceRequest import create_service_request,get_service_request,get_all_service_requests,get_requests_for_worker,assign_worker,start_work_request,complete_service_request,delete_service_request, get_all_assigned_service_requests,get_all_completed_service_requests,create_borewell_details
+from app.schemas.schemasServiceRequest import CreateSchemasServiceRequest, ResponseSchemasServiceRequest,BorewellDetails
 from app.db.database import get_db
 from app.core.dependency import get_current_user,admin_only,worker_only
 from app.schemas.schemasServiceRequest import AssignWorkerRequest
@@ -76,5 +76,7 @@ def get_service_request_endpoint_by_ID(service_request_id: int, db: Session = De
 
 
 
-
+@service_requests_router.post("/borewell")
+def get_borewelldetails_endpoint(borewell:BorewellDetails):
+    return create_borewell_details(borewell)
 
